@@ -138,7 +138,7 @@ class WeatherControl extends BaseControl {
       await fetchWeather(location.lat, location.lng);
     }
 
-    _timer = Timer(Duration(minutes: 5) - Duration(minutes: 5 % DateTime.now().minute, seconds: DateTime.now().second), reload);
+    _timer = Timer(Duration(minutes: 5) - Duration(minutes: DateTime.now().minute % 5, seconds: DateTime.now().second), reload);
   }
 
   Future fetchGps() async {

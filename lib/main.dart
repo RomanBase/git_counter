@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_control/core.dart';
 import 'package:git_counter/clock/clock.dart';
+import 'package:git_counter/config.dart';
 import 'package:git_counter/counter_page.dart';
 import 'package:git_counter/git/counter_control.dart';
 import 'package:git_counter/git/counter_repo.dart';
+import 'package:git_counter/git/graph_repo.dart';
 import 'package:git_counter/weather/weather.dart';
 import 'package:git_counter/weather/weather_repo.dart';
 
@@ -24,7 +26,8 @@ class MainApp extends StatelessWidget {
       },
       initializers: {
         CounterRepo: (_) => CounterRepo(),
-        CounterControl: (_) => CounterControl(),
+        GraphRepo: (_) => GraphRepo(GraphQLConfig.token /*provide your API KEY*/),
+        CounterControl: (_) => CounterControl('RomanBase' /*git username*/),
         WeatherRepo: (_) => WeatherRepo(),
       },
       loader: (context) => InitLoader.of(

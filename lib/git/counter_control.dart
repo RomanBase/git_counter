@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_control/core.dart';
 import 'package:git_counter/git/counter_repo.dart';
+import 'package:git_counter/git/graph_repo.dart';
 
 import 'entity/repository.dart';
 
@@ -29,6 +30,8 @@ class CounterModel extends ControlModel with StateControl {
 class CounterControl extends BaseControl {
   CounterRepo get repo => Control.get<CounterRepo>();
 
+  GraphRepo get graph => Control.get<GraphRepo>();
+
   final loading = LoadingControl();
   final repositories = ListControl<Repository>();
 
@@ -41,9 +44,11 @@ class CounterControl extends BaseControl {
 
   Timer _timer;
 
-  String _username = 'RomanBase';
+  String _username;
 
   String get username => _username;
+
+  CounterControl(this._username);
 
   @override
   void onInit(Map args) {
@@ -76,10 +81,17 @@ class CounterControl extends BaseControl {
       printDebug(err.toString());
     });
 
+    final sponsor = graph.sponsorsCount(username).then((value) {
+      sponsors.update(value);
+    }).catchError((err) {
+      printDebug(err.toString());
+    });
+
     await Future.wait([
       user,
       repos,
       contribution,
+      sponsor,
     ]);
 
     loading.done();
@@ -97,7 +109,7 @@ class CounterControl extends BaseControl {
     });
 
     stars.update(counter.stars);
-    watchers.update(counter.forks);
+    watchers.update(counter.watchers);
     issues.update(counter.issues);
   }
 

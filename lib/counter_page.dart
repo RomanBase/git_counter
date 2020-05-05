@@ -30,7 +30,7 @@ class CounterPage extends SingleControlWidget<CounterControl> with ThemeProvider
                     ),
                     CounterItemWidget(
                       title: 'watchers',
-                      model: control.watchers,
+                      model: control.sponsors,
                       icon: 'watch',
                       alignment: Alignment.topRight,
                     ),

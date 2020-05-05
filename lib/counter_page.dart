@@ -1,9 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter_control/core.dart';
-import 'package:git_counter/counter_control.dart';
+import 'package:git_counter/clock/clock.dart';
+import 'package:git_counter/git/counter_control.dart';
 
 class CounterPage extends SingleControlWidget<CounterControl> with ThemeProvider {
+  double get size => device.min * 0.65;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,10 +63,10 @@ class CounterPage extends SingleControlWidget<CounterControl> with ThemeProvider
           ),
           Center(
             child: Container(
-              width: device.min * 0.65,
-              height: device.min * 0.65,
+              width: size,
+              height: size,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(device.min * 0.325),
+                borderRadius: BorderRadius.circular(size * 0.5),
                 color: theme.primaryColor,
                 boxShadow: [
                   BoxShadow(
@@ -80,27 +83,39 @@ class CounterPage extends SingleControlWidget<CounterControl> with ThemeProvider
                   ),
                 ],
               ),
-              child: Container(
-                margin: EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(device.min * 0.325),
-                  color: theme.primaryColor,
-                  boxShadow: [
-                    BoxShadow(
-                      color: theme.primaryColorDark,
-                      offset: Offset(-2.0, -2.0),
-                      spreadRadius: 2.0,
-                      blurRadius: 4.0,
+              child: Stack(
+                children: <Widget>[
+                  ClockSeconds(),
+                  Container(
+                    margin: EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(device.min * 0.325),
+                      color: theme.primaryColor,
+                      boxShadow: [
+                        BoxShadow(
+                          color: theme.primaryColorDark,
+                          offset: Offset(-2.0, -2.0),
+                          spreadRadius: 2.0,
+                          blurRadius: 4.0,
+                        ),
+                        BoxShadow(
+                          color: theme.primaryColorLight.withOpacity(0.5),
+                          offset: Offset(2.0, 2.0),
+                          spreadRadius: 2.0,
+                          blurRadius: 4.0,
+                        ),
+                      ],
                     ),
-                    BoxShadow(
-                      color: theme.primaryColorLight.withOpacity(0.5),
-                      offset: Offset(2.0, 2.0),
-                      spreadRadius: 2.0,
-                      blurRadius: 4.0,
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+            ),
+          ),
+          Center(
+            child: SizedBox(
+              width: size,
+              height: size,
+              child: Clock(),
             ),
           ),
           LoadingBuilder(

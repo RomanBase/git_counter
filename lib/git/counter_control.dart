@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter_control/core.dart';
-import 'package:git_counter/counter_repo.dart';
-import 'package:git_counter/entity/repository.dart';
+import 'package:git_counter/git/counter_repo.dart';
+
+import 'entity/repository.dart';
 
 class CounterModel extends ControlModel with StateControl {
   final String name;
@@ -35,6 +38,8 @@ class CounterControl extends BaseControl {
   final follows = CounterModel('followers');
   final sponsors = CounterModel('sponsors');
   final contributions = CounterModel('contributions');
+
+  Timer _timer;
 
   String _username = 'RomanBase';
 
@@ -78,6 +83,8 @@ class CounterControl extends BaseControl {
     ]);
 
     loading.done();
+
+    _timer = Timer(Duration(minutes: 60) - Duration(minutes: DateTime.now().minute, seconds: DateTime.now().second), reload);
   }
 
   void _countRepos(List<Repository> repos) {
@@ -92,5 +99,21 @@ class CounterControl extends BaseControl {
     stars.update(counter.stars);
     watchers.update(counter.forks);
     issues.update(counter.issues);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    loading.dispose();
+    repositories.dispose();
+    stars.dispose();
+    watchers.dispose();
+    issues.dispose();
+    follows.dispose();
+    sponsors.dispose();
+    contributions.dispose();
+
+    _timer?.cancel();
   }
 }

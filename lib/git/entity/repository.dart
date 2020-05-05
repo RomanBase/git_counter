@@ -1,5 +1,5 @@
 import 'package:flutter_control/core.dart';
-import 'package:git_counter/entity/user.dart';
+import 'package:git_counter/git/entity/user.dart';
 
 class Repository extends RepositoryCounter {
   final int id;

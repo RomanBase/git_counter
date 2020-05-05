@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter_control/core.dart';
-import 'package:git_counter/entity/contribution.dart';
-import 'package:git_counter/entity/repository.dart';
 import 'package:http/http.dart' as http;
 
+import 'entity/contribution.dart';
+import 'entity/repository.dart';
 import 'entity/user.dart';
 
 class CounterRepo {

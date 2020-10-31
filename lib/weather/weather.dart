@@ -25,15 +25,15 @@ class LocationModel extends ControlModel with StateControl {
   bool get isAvailable => _lat != null && _lng != null;
 
   Future<bool> checkPermission() async {
-    final status = await Geolocator().checkGeolocationPermissionStatus();
+    final status = await Geolocator.checkPermission();
 
-    _isPermissionGranted = status == GeolocationStatus.granted;
+    _isPermissionGranted = status == LocationPermission.whileInUse;
 
     return _isPermissionGranted;
   }
 
   Future<void> requestCurrentGps() async {
-    final position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    final position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
     setPlace(position.latitude, position.longitude, '-');
   }

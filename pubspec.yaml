@@ -20,7 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_control: any
+  flutter_control: 0.98.85+3
 
   http: any
   flutter_svg: any

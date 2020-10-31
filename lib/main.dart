@@ -30,17 +30,21 @@ class MainApp extends StatelessWidget {
         CounterControl: (_) => CounterControl('RomanBase' /*git username*/),
         WeatherRepo: (_) => WeatherRepo(),
       },
-      loader: (context) => InitLoader.of(
-        builder: (context) => Container(
-          color: Colors.white,
-          child: Center(
-            child: CircularProgressIndicator(),
+      states: [
+        AppState.init.build(
+          (context) => InitLoader.of(
+            builder: (context) => Container(
+              color: Colors.white,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
           ),
         ),
-      ),
-      root: (_, __) => CounterPage(),
-      app: (context, key, home) => MaterialApp(
-        key: key,
+        AppState.main.build((context) => CounterPage()),
+      ],
+      app: (setup, home) => MaterialApp(
+        key: setup.key,
         home: home,
         title: 'Git Counter',
         theme: ThemeData(
